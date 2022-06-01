@@ -8,7 +8,6 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Filesystem\Filesystem;
 
 class Search extends Command
 {
@@ -30,7 +29,6 @@ class Search extends Command
     private $input;
     private $parsed_result = [];
 
-    // ...
     protected function configure(): void
     {
         $this
@@ -50,12 +48,11 @@ class Search extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new InputOutput($input, $output);
-
         $name = (string) $input->getArgument('name');
 
-        $temp1 = $_SERVER['HOME'] . '/.ssh/config';
+        $temp1 = $_SERVER['HOME'] . '/.ssh/config'; // ssh config patch
 
-        $value = file_get_contents($temp1);
+        $value = file_get_contents($temp1); // get file content
 
         $this->input = $value;
         $this->parse();
@@ -67,7 +64,7 @@ class Search extends Command
             $print = [];
 
             foreach($result as $host){
-                $print[] = sprintf('%s -> %s@%s:%S',$host['Host'], $host['Config']['user'], $host['Config']['hostname'], $host['Config']['port'] );
+                $print[] = sprintf('%s -> %s@%s:%s',$host['Host'], $host['Config']['user'], $host['Config']['hostname'], $host['Config']['port'] );
             }
 
             $io->listing($print);
@@ -87,7 +84,7 @@ class Search extends Command
 
                 if (strpos($var['Host'], $name) !== false){
                     if (empty($var['port'])){
-                        $var['port'] = 22;
+                        $var['port'] = 22; // auto port 22
                     }
                     $result[] = $var;
                 }
@@ -103,8 +100,7 @@ class Search extends Command
         $lines = explode("\n", $this->input);
 
         foreach ($lines as $line) {
-            if (empty($line)) continue;
-            if (empty(trim($line))) continue;
+            if (empty($line) || empty(trim($line))) continue;
 
             try {
                 [$_, $key, $value] = $this->regexp_match($line);
@@ -129,8 +125,6 @@ class Search extends Command
         if (preg_match($SECTION_PATTERN, trim($subject), $matches)) {
             return $matches;
         } else {
-            echo $subject;
-
             throw new \Exception('Invalid input');
         }
     }

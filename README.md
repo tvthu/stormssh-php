@@ -1,11 +1,10 @@
-<h1 align="center">PHP CLI Demo</h1>
+<h1 align="center">PHP Storm SSH</h1>
 
-<p align="center">PHP command-line tool demonstration</p>
+<p align="center">PHP Storm SSH tool</p>
 
 <p align="center">
     <img alt="Preview" src="/art/preview.png">
 	<p align="center">
-		<a href="https://github.com/tvthu/stormssh-php/actions"><img alt="Build Status" src="https://github.com/tvthu/stormssh-php/workflows/CI/badge.svg"></a>
 		<a href="//packagist.org/packages/tvthu/stormssh-php"><img alt="Latest Stable Version" src="https://poser.pugx.org/tvthu/stormssh-php/v"></a>
 		<a href="//packagist.org/packages/tvthu/stormssh-php"><img alt="License" src="https://poser.pugx.org/tvthu/stormssh-php/license"></a>
 	</p>
