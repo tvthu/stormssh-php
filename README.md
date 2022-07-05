@@ -3,7 +3,7 @@
 <p align="center">PHP Storm SSH tool</p>
 
 <p align="center">
-    <img alt="Preview" src="/art/preview.png">
+    <img alt="Preview" src="/art/preview.jpg">
 	<p align="center">
 		<a href="//packagist.org/packages/tvthu/stormssh-php"><img alt="Latest Stable Version" src="https://poser.pugx.org/tvthu/stormssh-php/v"></a>
 		<a href="//packagist.org/packages/tvthu/stormssh-php"><img alt="License" src="https://poser.pugx.org/tvthu/stormssh-php/license"></a>
@@ -40,10 +40,10 @@ source ~/.bash_profile
 
 ## Use
 
-All you need to do is call the `play` command to start the game:
+All you need to do is call the `search` command to start the game:
 
 ```
-storm play
+storm search <hostname>
 ```
 
 ## Update
