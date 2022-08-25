@@ -9,13 +9,12 @@ if (! is_file(sprintf('%s/vendor/autoload.php', $root))) {
 
 require sprintf('%s/vendor/autoload.php', $root);
 
-use tvthu\StormsshPhp\Commands\Play;
 use tvthu\StormsshPhp\Commands\Search;
 use Symfony\Component\Console\Application;
+use tvthu\StormsshPhp\Services\GetSshSetting;
 
 $application = new Application();
 
-$application->add(new Play());
-$application->add(new Search());
+$application->add(new Search(new GetSshSetting()));
 
 $application->run();

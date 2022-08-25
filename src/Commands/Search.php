@@ -4,6 +4,7 @@ namespace tvthu\StormsshPhp\Commands;
 
 use Exception;
 use tvthu\StormsshPhp\Services\InputOutput;
+use tvthu\StormsshPhp\Services\GetSshSetting;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -29,6 +30,15 @@ class Search extends Command
     private $input;
     private $parsed_result = [];
 
+    private $getSettingService;
+
+    public function __construct(GetSshSetting $getSettingService)
+    {
+        $this->getSettingService = $getSettingService;
+
+        parent::__construct();
+    }
+
     protected function configure(): void
     {
         $this
@@ -52,38 +62,40 @@ class Search extends Command
 
         $temp1 = $_SERVER['HOME'] . '/.ssh/config'; // ssh config patch
 
-        $value = file_get_contents($temp1); // get file content
+        $value = $this->getSettingService->fileGetContents($temp1); // get file content
 
         $this->input = $value;
         $this->parse();
 
         $result = $this->search($name);
 
-        if (!empty($result)){
+        if (!empty($result)) {
 
             $print = [];
 
-            foreach($result as $host){
-                $print[] = sprintf('%s -> %s@%s:%s',$host['Host'], $host['Config']['user'], $host['Config']['hostname'], $host['Config']['port'] );
+            foreach ($result as $host) {
+                $print[] = sprintf('%s -> %s@%s:%s', $host['Host'], $host['Config']['user'], $host['Config']['hostname'], $host['Config']['port']);
             }
 
             $io->listing($print);
-        }else{
+        } else {
             $io->error('not found');
+            return Command::FAILURE;
         }
 
         return Command::SUCCESS;
     }
 
-    private function search($name) {
+    private function search($name)
+    {
 
         $result = [];
 
-        if (!empty($this->parsed_result)){
-            foreach($this->parsed_result as $var){
+        if (!empty($this->parsed_result)) {
+            foreach ($this->parsed_result as $var) {
 
-                if (strpos($var['Host'], $name) !== false){
-                    if (empty($var['port'])){
+                if (strpos($var['Host'], $name) !== false) {
+                    if (empty($var['port'])) {
                         $var['port'] = 22; // auto port 22
                     }
                     $result[] = $var;
