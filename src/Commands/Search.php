@@ -74,7 +74,11 @@ class Search extends Command
             $print = [];
 
             foreach ($result as $host) {
-                $print[] = sprintf('%s -> %s@%s:%s', $host['Host'], $host['Config']['user'], $host['Config']['hostname'], $host['Config']['port']);
+                $user = isset($host['Config']['User']) ? $host['Config']['User'] : $host['Config']['user'];
+                $hostname = isset($host['Config']['HostName']) ? $host['Config']['HostName'] : $host['Config']['hostname'];
+                $port = isset($host['Config']['Port']) ? $host['Config']['Port'] : $host['Config']['port'];
+
+                $print[] = sprintf('%s -> %s@%s:%s', $host['Host'], $user, $hostname, $port);
             }
 
             $io->listing($print);
@@ -95,8 +99,8 @@ class Search extends Command
             foreach ($this->parsed_result as $var) {
 
                 if (strpos($var['Host'], $name) !== false) {
-                    if (empty($var['port'])) {
-                        $var['port'] = 22; // auto port 22
+                    if (empty($var['Port'])) {
+                        $var['Port'] = 22; // auto port 22
                     }
                     $result[] = $var;
                 }

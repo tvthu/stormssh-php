@@ -16,9 +16,9 @@ class PlayTest extends TestCase
     {
         $fileGetContentsWrapper = $this->createMock( GetSshSetting::class );
 
-
-        $someSimulatedJson = 'Host asif.foundation
-        hostname 54.251.31.69
+        $someSimulatedJson = 
+        'Host asi1f.foundation
+        hostname 127.0.0.1
         user ubuntu
         port 22
         identityfile "~/.ssh/asif-live/LightsailDefaultKey-ap-southeast-1.pem"';
